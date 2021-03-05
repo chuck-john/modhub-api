@@ -1,0 +1,11 @@
+DEFAULTS: &defaults
+  email: $LABEL@modhub
+  password_digest: <%= BCrypt::Password.create('password') %>
+
+one:
+  <<: *defaults
+  name: One
+
+two:
+  <<: *defaults
+  name: Two

@@ -1,0 +1,9 @@
+one:
+  kind: Automobile
+  make: one
+  name: One
+
+two:
+  kind: Automobile
+  make: two
+  name: Two

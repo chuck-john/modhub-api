@@ -1,0 +1,9 @@
+one:
+  name: One
+  years: <%= (2020..Date.current.year).to_a %>
+  model: one
+
+two:
+  name: Two
+  years: <%= (2015..2018).to_a %>
+  model: two

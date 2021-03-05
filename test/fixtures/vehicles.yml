@@ -1,0 +1,4 @@
+one:
+  garage: one
+  trim: one
+  year: <%= Date.current.year %>
