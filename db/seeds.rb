@@ -2,27 +2,31 @@
 
 require 'csv'
 
-def seed_make(row)
-  Make.find_or_create_by!(name: row['model_make_id'].upcase.gsub('-', ' '))
+def seed_make(name)
+  Make.find_or_create_by!(name: name)
 end
 
-def seed_model(row, make)
-  make.models.find_or_create_by!(name: row['model_name'])
+def seed_model(make, name, kind)
+  make.models.find_or_create_by!(name: name, kind: kind)
 end
 
-def seed_trim(row, model)
-  model.trims.find_or_initialize_by(name: row['model_trim'] || '').tap do |trim|
-    trim.update!(years: (trim.years << row['model_year'].to_i).uniq.sort)
+def seed_trim(model, name, year)
+  model.trims.find_or_initialize_by(name: name).tap do |trim|
+    trim.update! years: (trim.years << year.to_i).uniq.sort
   end
 end
 
 $stdout.sync = true
 
-CSV.foreach('db/cars.csv', headers: true) do |row|
-  make = seed_make(row)
-  model = seed_model(row, make)
-  trim = seed_trim(row, model)
-  puts "#{make} #{model} #{trim}" # rubocop:disable Rails/Output
+autos = '../automobiles.csv'
+
+if File.exist?(autos)
+  CSV.foreach(autos, headers: true) do |row|
+    make = seed_make(row['model_make_id'].upcase.gsub('-', ' '))
+    model = seed_model(make, row['model_name'], :auto)
+    trim = seed_trim(model, row['model_trim'] || '', row['model_year'])
+    puts "#{make} #{model} #{trim}" # rubocop:disable Rails/Output
+  end
 end
 
 User.create! do |user|

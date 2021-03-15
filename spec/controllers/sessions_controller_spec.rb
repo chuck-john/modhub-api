@@ -12,6 +12,11 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: { user: { email: user.email, password: 'password' } }
       expect(response).to have_http_status(:created)
     end
+
+    it 'returns a 401 on invalid password' do
+      post :create, params: { user: { email: user.email, password: '123' } }
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 
   describe 'DELETE destroy' do

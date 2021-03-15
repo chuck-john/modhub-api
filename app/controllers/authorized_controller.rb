@@ -6,6 +6,7 @@ class AuthorizedController < ApplicationController
 
   after_action :clear_current_user
 
+  rescue_from ActiveRecord::RecordInvalid, with: :render_errors
   rescue_from ActiveRecord::RecordNotFound, with: :render_unauthorized
 
   private
@@ -20,15 +21,19 @@ class AuthorizedController < ApplicationController
   end
 
   def authorized?
-    authorization_token && @current_user.jwt_valid?(authorization_token)
+    @current_user.valid_jwt?(authorization_token)
   end
 
   def clear_current_user
     @current_user = nil
   end
 
+  def render_errors(error)
+    render_json error.record.errors.full_messages, :unprocessable_entity
+  end
+
   def render_unauthorized
-    render json: 'Unauthorized', status: :unauthorized
+    render_json 'Unauthorized', :unauthorized
   end
 
   def set_current_user

@@ -5,7 +5,7 @@ class ModelsController < ApplicationController
   before_action :set_models
 
   def index
-    render json: { models: serialize(@models) }
+    render_json @models
   end
 
   private
@@ -15,6 +15,6 @@ class ModelsController < ApplicationController
   end
 
   def set_models
-    @models = @make.models.order(:name)
+    @models = @make.models.where(kind: params[:kind]).order(:name)
   end
 end

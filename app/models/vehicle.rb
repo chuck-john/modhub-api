@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Vehicle < ApplicationRecord
+  delegate :kind, to: :model
   delegate :years, to: :trim
 
   belongs_to :garage
@@ -14,7 +15,7 @@ class Vehicle < ApplicationRecord
                    inclusion: { in: :years }
 
   def to_s
-    "#{year} #{make} #{model} #{trim}"
+    "#{year} #{make} #{model} #{trim} #{kind}"
   end
 end
 

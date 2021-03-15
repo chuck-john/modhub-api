@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe MakesController, type: :controller do
+RSpec.describe KindsController, type: :controller do
   describe 'GET index' do
     it 'returns a 200' do
-      get :index, params: { kind: :auto }
+      get :index
       expect(response).to have_http_status(:ok)
     end
   end

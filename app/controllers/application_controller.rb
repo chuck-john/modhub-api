@@ -3,11 +3,25 @@
 class ApplicationController < ActionController::API
   private
 
-  def serialize(object, serializer: serializer_class(object))
-    serializer.new(object).serializable_hash
+  def create_action?
+    action_name == 'create'
+  end
+
+  def render_json(object, status = :ok)
+    render json: serializable?(object) ? serialize(object) : object, status: status
+  end
+
+  def serializable?(object)
+    serializer_class(object)
+  rescue NameError
+    false
+  end
+
+  def serialize(object)
+    serializer_class(object).new(object).serializable_hash
   end
 
   def serializer_class(object)
-    "#{(object.try(:first) || object).class}Serializer".constantize
+    "#{object.try(:klass) || object.class}Serializer".constantize
   end
 end

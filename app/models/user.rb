@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   JWT_KEY = Rails.application.credentials[:jwt_key]
 
-  after_create :regenerate_token
+  after_commit :regenerate_token, on: :create
 
   has_many :garages, dependent: :destroy
   has_many :vehicles, through: :garages
@@ -15,16 +15,6 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def jwt_valid?(string)
-    token == string && jwt_payload[:aud] == id && jwt_live?
-  rescue JWT::DecodeError
-    false
-  end
-
-  def password_valid?(string)
-    authenticate(string) == self
-  end
-
   def regenerate_token
     payload = { aud: id, exp: 1.week.from_now.to_i, iat: Time.current.to_i }
     update! token: JWT.encode(payload, JWT_KEY)
@@ -34,11 +24,17 @@ class User < ApplicationRecord
     name
   end
 
-  private
-
-  def jwt_live?
-    jwt_payload[:exp] > Time.current.to_i
+  def valid_jwt?(string = token)
+    string == token && jwt_payload[:aud] == id && jwt_payload[:exp] > Time.current.to_i
+  rescue JWT::DecodeError
+    false
   end
+
+  def valid_password?(string)
+    authenticate(string) == self
+  end
+
+  private
 
   def jwt_payload
     JWT.decode(token, JWT_KEY).first.deep_symbolize_keys

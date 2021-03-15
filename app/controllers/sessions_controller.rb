@@ -3,24 +3,24 @@
 class SessionsController < AuthorizedController
   def create
     @current_user.regenerate_token
-    render json: serialize(@current_user), status: :created
+    render_json @current_user, :created
   end
 
   def destroy
     @current_user.update!(token: nil)
-    render json: serialize(@current_user), status: :no_content
+    render_json @current_user, :no_content
   end
 
   private
 
   def authorized?
-    return super if authorization_token
+    return super unless create_action?
 
-    @current_user.password_valid?(user_params[:password])
+    @current_user.valid_password?(user_params[:password])
   end
 
   def set_current_user
-    return super if authorization_token
+    return super unless create_action?
 
     @current_user = User.find_by!(email: user_params[:email])
   end
