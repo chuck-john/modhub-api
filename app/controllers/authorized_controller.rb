@@ -29,7 +29,7 @@ class AuthorizedController < ApplicationController
   end
 
   def render_errors(error)
-    render_json error.record.errors.full_messages, :unprocessable_entity
+    render_json error.record.errors, :unprocessable_entity
   end
 
   def render_unauthorized
