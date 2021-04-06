@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class AuthorizedController < ApplicationController
-  before_action :set_current_user
-  before_action :authorize
+  with_options prepend: true do
+    before_action :authorize
+    before_action :set_current_user
+  end
 
   after_action :clear_current_user
 
