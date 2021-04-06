@@ -15,8 +15,15 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def regenerate_token
-    payload = { aud: id, exp: 1.week.from_now.to_i, iat: Time.current.to_i }
+  def jwt_payload
+    JWT.decode(token, JWT_KEY, true, aud: id, verify_aud: true).first.deep_symbolize_keys
+  end
+
+  def new_jwt_payload
+    { aud: id, exp: 1.week.from_now.to_i, nbf: Time.current.to_i }
+  end
+
+  def regenerate_token(payload = new_jwt_payload)
     update! token: JWT.encode(payload, JWT_KEY)
   end
 
@@ -25,19 +32,13 @@ class User < ApplicationRecord
   end
 
   def valid_jwt?(string = token)
-    string == token && jwt_payload[:aud] == id && jwt_payload[:exp] > Time.current.to_i
-  rescue JWT::DecodeError
+    string == token && jwt_payload.is_a?(Hash)
+  rescue JWT::DecodeError => _error
     false
   end
 
   def valid_password?(string)
     authenticate(string) == self
-  end
-
-  private
-
-  def jwt_payload
-    JWT.decode(token, JWT_KEY).first.deep_symbolize_keys
   end
 end
 
