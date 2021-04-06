@@ -4,7 +4,7 @@ class MakesController < ApplicationController
   before_action :set_makes
 
   def index
-    render_json @makes
+    render_json(@makes)
   end
 
   private

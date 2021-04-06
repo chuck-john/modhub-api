@@ -5,7 +5,7 @@ class ModelsController < ApplicationController
   before_action :set_models
 
   def index
-    render_json @models
+    render_json(@models)
   end
 
   private

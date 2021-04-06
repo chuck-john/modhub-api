@@ -4,7 +4,7 @@ class KindsController < ApplicationController
   before_action :set_kinds
 
   def index
-    render_json @kinds
+    render_json(@kinds)
   end
 
   private

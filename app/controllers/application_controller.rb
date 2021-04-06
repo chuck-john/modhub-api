@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_json(object, status = :ok)
-    render json: serializable?(object) ? serialize(object) : object, status: status
+    render(json: serializable?(object) ? serialize(object) : object, status: status)
   end
 
   def serializable?(object)

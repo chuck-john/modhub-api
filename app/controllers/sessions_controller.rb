@@ -3,12 +3,12 @@
 class SessionsController < AuthorizedController
   def create
     @current_user.regenerate_token
-    render_json @current_user, :created
+    render_json(@current_user, :created)
   end
 
   def destroy
     @current_user.update!(token: nil)
-    render_json @current_user, :no_content
+    render_json(@current_user, :no_content)
   end
 
   private

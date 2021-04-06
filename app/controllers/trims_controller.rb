@@ -5,7 +5,7 @@ class TrimsController < ApplicationController
   before_action :set_trims
 
   def index
-    render_json @trims
+    render_json(@trims)
   end
 
   private
