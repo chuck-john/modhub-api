@@ -9,5 +9,8 @@ AllCops:
 Layout/EndOfLine:
   Enabled: false
 
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
