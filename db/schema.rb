@@ -35,10 +35,19 @@ ActiveRecord::Schema.define(version: 2021_03_05_024351) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "make_id", null: false
+    t.bigint "mode_id", null: false
     t.string "name", null: false
-    t.string "kind", null: false
     t.index ["make_id"], name: "index_models_on_make_id"
+    t.index ["mode_id"], name: "index_models_on_mode_id"
     t.index ["name", "make_id"], name: "index_models_on_name_and_make_id", unique: true
+  end
+
+  create_table "modes", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.index ["slug"], name: "index_modes_on_slug", unique: true
   end
 
   create_table "trims", force: :cascade do |t|
@@ -73,6 +82,7 @@ ActiveRecord::Schema.define(version: 2021_03_05_024351) do
 
   add_foreign_key "garages", "users"
   add_foreign_key "models", "makes"
+  add_foreign_key "models", "modes"
   add_foreign_key "trims", "models"
   add_foreign_key "vehicles", "garages"
   add_foreign_key "vehicles", "trims"

@@ -10,6 +10,6 @@ class MakesController < ApplicationController
   private
 
   def set_makes
-    @makes = Make.includes(:models).where(models: { kind: params[:kind] }).order(:name)
+    @makes = Make.order(:name)
   end
 end

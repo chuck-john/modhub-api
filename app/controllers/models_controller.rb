@@ -15,6 +15,6 @@ class ModelsController < ApplicationController
   end
 
   def set_models
-    @models = @make.models.where(kind: params[:kind]).order(:name)
+    @models = @make.models.order(:name)
   end
 end

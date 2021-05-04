@@ -1,9 +1,9 @@
 one:
-  kind: Automobile
   make: one
+  mode: auto
   name: One
 
 two:
-  kind: Automobile
   make: two
+  mode: auto
   name: Two

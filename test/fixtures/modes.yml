@@ -1,0 +1,6 @@
+DEFAULTS: &defaults
+  slug: $LABEL
+
+auto:
+  <<: *defaults
+  name: Automobile
