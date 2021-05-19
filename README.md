@@ -1,24 +1,54 @@
-# README
+# ModHub API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Endpoints
+* `GET /makes`
+* `GET /models`
+* `GET /modes`
+* `GET /trims`
+* `POST /sessions`
+* `DELETE /sessions`
+* `POST /users`
+* `PUT /users`
+* `DELETE /users`
 
-Things you may want to cover:
+## Responses
+### Collection
+```json
+{
+  "data": [
+    {
+      "attributes": {
+        "id": 1,
+        "name": "ABARTH"
+      },
+      "id": "1",
+      "type": "make"
+    }
+  ]
+}
+```
 
-* Ruby version
+### Errors
+```json
+{
+  "email": [
+    "has already been taken"
+  ]
+}
+```
 
-* System dependencies
+## Contributing
+### Stack
+* Ruby 3.x
+* Rails 6.x
 
-* Configuration
+### Seed Database
+WARNING: The automobile data CSV contains ~10,000 rows. Importing will likely take a few minutes to complete.
 
-* Database creation
+1. Download automobile file data [here](https://drive.google.com/file/d/1mFDVznruknHyLoA8wXuCFWyuSmQnAywX/view?usp=sharing)
+1. Place file in `db` directory named `automobiles.csv`
+1. Run `$ rake db:seed` at the project root
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Default User
+* email: `tester@modhub.com`
+* password: `password`

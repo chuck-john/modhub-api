@@ -34,7 +34,7 @@ modes = {
 
 modes.each { |slug, name| seed_mode(name, slug) }
 
-autos = '../automobiles.csv'
+autos = 'db/automobiles.csv'
 
 if File.exist?(autos)
   CSV.foreach(autos, headers: true) do |row|
