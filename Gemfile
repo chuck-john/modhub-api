@@ -17,6 +17,7 @@ gem 'sass-rails'
 
 group :development do
   gem 'annotate', require: false
+  gem 'faker', require: false
   gem 'listen'
   gem 'spring'
 end
