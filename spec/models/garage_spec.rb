@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Garage, type: :model do
+describe Garage, type: :model do
   fixtures :all
 
   let(:garage) { garages(:one).dup }

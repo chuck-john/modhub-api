@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Trim, type: :model do
+describe Trim, type: :model do
   fixtures :all
 
   let(:trim) { trims(:one).dup }

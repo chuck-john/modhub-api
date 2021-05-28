@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SessionsController, type: :controller do
+describe SessionsController, type: :controller do
   fixtures :all
 
   let(:user) { users(:one) }

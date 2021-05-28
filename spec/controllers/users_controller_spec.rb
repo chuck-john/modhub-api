@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do # rubocop:disable Metrics/BlockLength
+describe UsersController, type: :controller do # rubocop:disable Metrics/BlockLength
   fixtures :all
 
   let(:user) { users(:one) }

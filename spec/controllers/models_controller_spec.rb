@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ModelsController, type: :controller do
+describe ModelsController, type: :controller do
   fixtures :all
 
   let(:model) { models(:one) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Vehicle, type: :model do
+describe Vehicle, type: :model do
   fixtures :all
 
   let(:vehicle) { vehicles(:one).dup }

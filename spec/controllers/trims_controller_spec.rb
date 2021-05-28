@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TrimsController, type: :controller do
+describe TrimsController, type: :controller do
   fixtures :all
 
   let(:trim) { trims(:one) }

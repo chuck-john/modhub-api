@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ModesController, type: :controller do
+describe ModesController, type: :controller do
   describe 'GET index' do
     it 'returns a 200' do
       get :index

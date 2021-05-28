@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Make, type: :model do
+describe Make, type: :model do
   fixtures :all
 
   let(:make) { makes(:one).dup }

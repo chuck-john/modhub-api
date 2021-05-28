@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Mode, type: :model do
+describe Mode, type: :model do
   fixtures :all
 
   let(:mode) { modes(:auto).dup }
