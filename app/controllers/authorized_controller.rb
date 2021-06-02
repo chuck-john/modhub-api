@@ -34,8 +34,8 @@ class AuthorizedController < ApplicationController
     render_json(error.record.errors, :unprocessable_entity)
   end
 
-  def render_unauthorized(error = nil)
-    render_json(error&.message || 'Unauthorized', :unauthorized)
+  def render_unauthorized
+    render_json('Unauthorized', :unauthorized)
   end
 
   def set_current_user
