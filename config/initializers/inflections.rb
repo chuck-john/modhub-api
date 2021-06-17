@@ -18,5 +18,11 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.uncountable %w[aircraft watercraft]
+  inflect.acronym 'API'
+  inflect.acronym 'ATV'
+  inflect.acronym 'ModHub'
+  inflect.acronym 'RV'
+
+  inflect.uncountable 'aircraft'
+  inflect.uncountable 'watercraft'
 end
