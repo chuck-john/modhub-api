@@ -12,4 +12,6 @@ Rails.application.routes.draw do
     resource :tokens, only: %i[create destroy]
     resource :users, only: %i[create update destroy]
   end
+
+  mount ModHub::API => '/'
 end

@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   def regenerate_token(payload = new_jwt_payload)
     update! token: JWT.encode(payload, JWT_KEY)
+    token
   end
 
   def to_s
