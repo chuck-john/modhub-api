@@ -1,51 +1,61 @@
 # frozen_string_literal: true
 
 require 'csv'
+require 'faker'
 
 def seed_make(name)
-  Make.find_or_create_by!(name: name)
+  Make.find_or_create_by!(name: name.upcase.gsub('-', ' '))
 end
 
-def seed_mode(name, slug)
-  Mode.find_or_create_by!(slug: slug) { |mode| mode.name = name }
+def seed_mode(slug, name)
+  Mode.find_or_create_by!(slug: slug) { |mode| mode.name = name.singularize.titleize }
 end
 
-def seed_model(name, make, mode)
-  make.models.find_or_create_by!(name: name) do |model|
-    model.mode = Mode.find_by!(slug: mode)
+def seed_model(make, mode, name)
+  make.models.find_or_create_by!(name: name) { |model| model.mode = mode }
+end
+
+def seed_trim(model, year, name)
+  model.trims.find_or_initialize_by(name: name || '').tap do |trim|
+    trim.update! years: (trim.years << year.to_i).uniq.sort
   end
 end
 
-def seed_trim(name, model, year)
-  model.trims.find_or_initialize_by(name: name).tap do |trim|
-    trim.update! years: (trim.years << year.to_i).uniq.sort
+def seed_user(email, name)
+  User.find_or_create_by!(email: email.downcase) do |user|
+    user.name = name
+    user.password = user.password_confirmation = 'password'
   end
 end
 
 $stdout.sync = true
 
-modes = {
-  air: 'Aircraft',
-  atv: 'ATV',
-  auto: 'Automobile',
-  rv: 'RV',
-  water: 'Watercraft'
-}
-
-modes.each { |slug, name| seed_mode(name, slug) }
-
-autos = 'db/automobiles.csv'
-
-if File.exist?(autos)
-  CSV.foreach(autos, headers: true) do |row|
-    make = seed_make(row['model_make_id'].upcase.gsub('-', ' '))
-    model = seed_model(row['model_name'], make, :auto)
-    trim = seed_trim(row['model_trim'] || '', model, row['model_year'])
-    puts "#{make} #{model} #{trim}" # rubocop:disable Rails/Output
-  end
+10.times do
+  name = Faker::Name.neutral_first_name
+  seed_user("#{name}@modhub.com", name)
 end
 
-User.find_or_create_by!(email: 'tester@modhub.com') do |user|
-  user.name = 'Tester'
-  user.password = user.password_confirmation = 'password'
+seeds = [
+  { file: 'aircraft',    mode: :air   },
+  { file: 'atvs',        mode: :atv   },
+  { file: 'automobiles', mode: :auto  },
+  { file: 'rvs',         mode: :rv    },
+  { file: 'spacecraft',  mode: :space },
+  { file: 'watercraft',  mode: :water }
+].freeze
+
+seeds.each do |seed|
+  file = Rails.root.join("storage/#{seed[:file]}.csv")
+  mode = seed_mode(seed[:mode], seed[:file])
+
+  next unless File.exist?(file)
+
+  CSV.foreach(file, headers: true) do |row|
+    year  = row['year']
+    make  = seed_make(row['make'])
+    model = seed_model(make, mode, row['model'])
+    trim  = seed_trim(model, year, row['trim'])
+
+    puts "#{mode}: #{year} #{make} #{model} #{trim}".strip # rubocop:disable Rails/Output
+  end
 end
