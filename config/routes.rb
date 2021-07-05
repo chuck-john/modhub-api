@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   with_options defaults: { format: :json } do
     with_options only: :index do
+      resources :docs
       resources :makes
       resources :models
       resources :modes

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ModesController < ApplicationController
+  include ModesControllerDoc
+
   before_action :set_modes
 
   def index

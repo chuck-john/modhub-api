@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Make < ApplicationRecord
+  include MakeDoc
+
   has_many :models, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }

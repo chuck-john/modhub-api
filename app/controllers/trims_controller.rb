@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TrimsController < ApplicationController
+  include TrimsControllerDoc
+
   before_action :set_model
   before_action :set_trims
 

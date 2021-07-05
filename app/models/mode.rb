@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Mode < ApplicationRecord
+  include ModeDoc
+
   has_many :models, dependent: :destroy
 
   with_options presence: true do

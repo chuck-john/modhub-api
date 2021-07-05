@@ -14,6 +14,7 @@ gem 'pg'
 gem 'puma'
 gem 'rack-cors'
 gem 'sass-rails'
+gem 'swagger-blocks'
 
 group :development do
   gem 'annotate', require: false

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Model < ApplicationRecord
+  include ModelDoc
+
   belongs_to :make
   belongs_to :mode
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Trim < ApplicationRecord
+  include TrimDoc
+
   belongs_to :model
 
   has_one :make, through: :model
