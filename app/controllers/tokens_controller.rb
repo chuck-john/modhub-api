@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class SessionsController < AuthorizedController
+class TokensController < AuthorizedController
+  include TokensControllerDoc
+
   def create
     @current_user.regenerate_token
     render_json(@current_user, :created)
@@ -26,6 +28,6 @@ class SessionsController < AuthorizedController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.permit(:email, :format, :password)
   end
 end

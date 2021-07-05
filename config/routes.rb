@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :trims
     end
 
-    resource :sessions, only: %i[create destroy]
+    resource :tokens, only: %i[create destroy]
     resource :users, only: %i[create update destroy]
   end
 end
