@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SessionsController < AuthorizedController
+class TokensController < AuthorizedController
   def create
     @current_user.regenerate_token
     render_json(@current_user, :created)

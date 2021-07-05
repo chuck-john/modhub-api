@@ -3,8 +3,6 @@
 class User < ApplicationRecord
   JWT_KEY = Rails.application.credentials[:jwt_key]
 
-  after_commit :regenerate_token, on: :create
-
   has_many :garages, dependent: :destroy
   has_many :vehicles, through: :garages
 
