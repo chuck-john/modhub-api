@@ -1,6 +1,8 @@
 # ModHub API
 
 ## Endpoints
+* `POST /garages`
+* `DELETE /garages`
 * `GET /makes`
 * `GET /models`
 * `GET /modes`
@@ -10,6 +12,8 @@
 * `POST /users`
 * `PUT /users`
 * `DELETE /users`
+* `POST /vehicles`
+* `DELETE /vehicles`
 
 ## Responses
 ### Collection

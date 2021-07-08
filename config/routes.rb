@@ -9,7 +9,13 @@ Rails.application.routes.draw do
       resources :trims
     end
 
-    resource :tokens, only: %i[create destroy]
+    with_options only: %i[create destroy] do
+      resource :tokens
+
+      resources :garages
+      resources :vehicles
+    end
+
     resource :users, only: %i[create update destroy]
   end
 end
